@@ -10,27 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Завантажуємо .env з кореня проекту, якщо є
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-99n08^c07#d*^dmaf4o32nre4xxfjxs(f@tu87iw++u9osium)'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+DEBUG = os.getenv("DJANGO_DEBUG")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # для Next.js під час девелопу
-]
+CORS_ALLOWED_ORIGINS = [o for o in os.getenv("CORS_ALLOWED_ORIGINS","").split(",") if o]
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -85,6 +84,9 @@ WSGI_APPLICATION = 'chinchin_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# (опційно) якщо плануватимеш Postgres:
+# pip install dj-database-url psycopg[binary]
 
 DATABASES = {
     'default': {
