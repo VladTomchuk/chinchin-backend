@@ -29,7 +29,7 @@ DEBUG = os.getenv("DJANGO_DEBUG")
 
 CORS_ALLOWED_ORIGINS = [o for o in os.getenv("CORS_ALLOWED_ORIGINS","").split(",") if o]
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["tomchukvlad.pythonanywhere.com"]
 
 # Application definition
 
